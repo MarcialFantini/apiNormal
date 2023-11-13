@@ -42,7 +42,7 @@ export class BlogService {
     const updateBlog = await BlogModel.findByIdAndUpdate(
       blogId,
       {
-        $pull: { texts: { text } },
+        $pull: { texts: text },
       },
       { new: true }
     );
@@ -58,13 +58,15 @@ export class BlogService {
     if (!updateBlog) {
       throw new Error("Blog NOT Found");
     }
-    const indexBlog = updateBlog.texts.findIndex((item) => item === oldText);
-    if (indexBlog >= 0) {
+    const indexBlog = updateBlog.texts.findIndex((item) => {
+      return item === oldText;
+    });
+    if (!updateBlog.texts[indexBlog]) {
       throw new Error("Text NOT Found");
     }
     updateBlog.texts[indexBlog] = newText;
     await updateBlog.save();
-    return true;
+    return updateBlog;
   }
 
   static async deleteBlog(blogId: string) {

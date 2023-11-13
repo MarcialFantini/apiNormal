@@ -64,3 +64,26 @@ export const addTextBlogById = async (req: Request, res: Response) => {
     res.json({ message: error.message, status: 500 });
   }
 };
+
+export const updateTextBlogById = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const oldText = req.body.oldText;
+    const newText = req.body.newText;
+    const newBlog = await BlogService.updateTextBlog(id, oldText, newText);
+    res.json({ message: newBlog, status: 200 });
+  } catch (error: any) {
+    res.json({ message: error.message, status: 500 });
+  }
+};
+
+export const delTextBlogById = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const textOld = req.body.textOld;
+    const newBlog = await BlogService.delTextBlog(id, textOld);
+    res.json({ message: newBlog, status: 200 });
+  } catch (error: any) {
+    res.json({ message: error.message, status: 500 });
+  }
+};

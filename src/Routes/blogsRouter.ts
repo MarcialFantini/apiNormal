@@ -1,10 +1,13 @@
 import { Router } from "express";
 import {
+  addTextBlogById,
   createBlog,
   delBlogForId,
+  delTextBlogById,
   getBlogById,
   getPageBlogs,
   patchBlogForId,
+  updateTextBlogById,
 } from "../controllers/blogsControllers";
 
 const blogRouter = Router();
@@ -19,6 +22,8 @@ blogRouter.delete("/one/:id", delBlogForId);
 
 //blog texts operations
 
-blogRouter.post("/text/push/:");
+blogRouter.post("/one/text/create/:id", addTextBlogById);
+blogRouter.patch("/one/text/update/:id", updateTextBlogById);
+blogRouter.delete("/one/text/del/:id", delTextBlogById);
 
 export { blogRouter };
